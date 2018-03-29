@@ -24,15 +24,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Sr9-4O-R1J">
+                                <rect key="frame" x="177" y="366" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="A5b-X3-mg9"/>
-                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="e1T-CY-DUA"/>
+                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerX" secondItem="Sr9-4O-R1J" secondAttribute="centerX" id="Bgz-Go-p4N"/>
+                            <constraint firstItem="Sr9-4O-R1J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="P6S-gx-ED1"/>
+                            <constraint firstItem="Sr9-4O-R1J" firstAttribute="top" secondItem="QH4-9Z-cun" secondAttribute="bottom" constant="8" symbolic="YES" id="acV-R1-Bcx"/>
+                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="yhX-YF-T5O"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="connectingIndicator" destination="Sr9-4O-R1J" id="r4h-2b-WRj"/>
                         <outlet property="measurement" destination="QH4-9Z-cun" id="MxK-bc-YWX"/>
                     </connections>
                 </viewController>
