@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import CoreBluetooth
 
+class ViewController: UIViewController, BluetoothModelDelegate{
 
-class ViewController: UIViewController{
+    
+
     private var btmodel: BluetoothModel!
     
     @IBOutlet weak var measurement: UILabel!
@@ -17,11 +20,39 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         btmodel = BluetoothModel()
-        btmodel.onMeasurementUpdate = {
-            (_ measurement: UInt16) -> Void in
-            self.measurement.text = "\(measurement)"
-        }
+        btmodel.delegate = self
     }
 }
 
+extension ViewController {
+    func didMeasurementUpdate(_ measurement: Int32) {
+        self.measurement.text = "\(measurement)"
+    }
+    
+    func bluetoothIsPoweredOff() {
+        let alert = UIAlertController(title: "Bluetooth is Powered Off", message: "Turn on the bluetooth", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) {
+            _ in
+            print("Ok is pressed")
+        })
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func bluetoothIsPoweredOn() {
+        
+    }
+    
+    func didDisconnectedWith(Peripheral peripheral: CBPeripheral) {
+        let alert = UIAlertController(title: "Bluetooth Disconnected", message: "Try to reconnect\n Make sure the Bluetooth is on", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) {
+            _ in
+            print("Ok is pressed")
+        })
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func startConnectingTo(Peripheral peripheral: CBPeripheral) {
+        
+    }
+}
 

@@ -9,7 +9,17 @@
 import Foundation
 import CoreBluetooth
 
+protocol BluetoothModelDelegate: class {
+    func didMeasurementUpdate(_ measurement: Int32)
+    func bluetoothIsPoweredOff()
+    func bluetoothIsPoweredOn()
+    func startConnectingTo(Peripheral peripheral: CBPeripheral)
+    func didDisconnectedWith(Peripheral peripheral: CBPeripheral)
+}
+
 class BluetoothModel: NSObject {
+    
+    weak var delegate: BluetoothModelDelegate?
     
     private var centralManager: CBCentralManager!
     
@@ -17,10 +27,8 @@ class BluetoothModel: NSObject {
     
     var rxCharacteristic: CBCharacteristic?
     
-    private var measurement:UInt16 = 0
-    
-    var onMeasurementUpdate: ((_ measurement: UInt16) -> Void)?
-    
+    private var measurement:Int32 = 0
+
     private var peripheral:CBPeripheral? {
         get {
             if (connectedPeripherals.count != 0) {
@@ -58,6 +66,7 @@ class BluetoothModel: NSObject {
     
     func connect(toPeripheral peripheral: CBPeripheral) {
         print("Connecting to \(peripheral.name ?? "no name")")
+        delegate?.startConnectingTo(Peripheral: peripheral)
         centralManager.connect(peripheral, options: nil)
     }
     
@@ -78,6 +87,7 @@ extension BluetoothModel: CBCentralManagerDelegate {
         switch central.state {
         case CBManagerState.poweredOn:
             print("\(central.description) is power on")
+            delegate?.bluetoothIsPoweredOn()
             if connectedPeripherals.count == 0 {
                 retriveConnectedDevice(withServiceUUID: CBUUID(string: "180D"))
             } else {
@@ -88,6 +98,7 @@ extension BluetoothModel: CBCentralManagerDelegate {
         case CBManagerState.poweredOff:
             print("\(central.description) is power off")
             print("Make sure bluetooth is on")
+            delegate?.bluetoothIsPoweredOff()
         default:
             break
         }
@@ -118,6 +129,7 @@ extension BluetoothModel: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("\(central) is diconnected to \(peripheral.name ?? "No Name")")
         print("Try to reconnect")
+        delegate?.didDisconnectedWith(Peripheral: peripheral)
         connect(toPeripheral: peripheral)
     }
     
@@ -133,16 +145,13 @@ extension BluetoothModel: CBCentralManagerDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let data = characteristic.value {
-            measurement = data.reduce(0) {
-                (result, char) in
-                let result = result * 256 + UInt16(char)
-                return result
-            }
+            measurement = data.withUnsafeBytes({(ptr: UnsafePointer<Int32>) -> Int32 in
+                let m = ptr.pointee
+                return m.bigEndian
+            })
         }
         print(measurement)
-        if let callback = onMeasurementUpdate {
-            callback(measurement)
-        }
+        delegate?.didMeasurementUpdate(measurement)
         print(characteristic.value?.hexDescription ?? "Error")
     }
     
@@ -183,4 +192,3 @@ extension Data {
         return reduce("") {$0 + String(format: "%02x", $1)}
     }
 }
-
