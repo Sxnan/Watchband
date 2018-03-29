@@ -9,18 +9,22 @@
 import UIKit
 import CoreBluetooth
 
-class ViewController: UIViewController, BluetoothModelDelegate{
-
-    
+class ViewController: UIViewController, BluetoothModelDelegate{    
 
     private var btmodel: BluetoothModel!
     
     @IBOutlet weak var measurement: UILabel!
+    @IBOutlet weak var connectingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectingIndicator.hidesWhenStopped = true
         btmodel = BluetoothModel()
         btmodel.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        connectingIndicator.stopAnimating()
     }
 }
 
@@ -30,12 +34,13 @@ extension ViewController {
     }
     
     func bluetoothIsPoweredOff() {
-        let alert = UIAlertController(title: "Bluetooth is Powered Off", message: "Turn on the bluetooth", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) {
-            _ in
-            print("Ok is pressed")
-        })
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Bluetooth is Powered Off", message: "Turn on the bluetooth", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default) {
+//            _ in
+//            print("Ok is pressed")
+//        })
+//        self.present(alert, animated: true, completion: nil)
+        self.measurement.text = "Bluetooth is Off"
     }
     
     func bluetoothIsPoweredOn() {
@@ -43,16 +48,21 @@ extension ViewController {
     }
     
     func didDisconnectedWith(Peripheral peripheral: CBPeripheral) {
-        let alert = UIAlertController(title: "Bluetooth Disconnected", message: "Try to reconnect\n Make sure the Bluetooth is on", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) {
-            _ in
-            print("Ok is pressed")
-        })
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Bluetooth Disconnected", message: "Try to reconnect\n Make sure the Bluetooth is on", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default) {
+//            _ in
+//            print("Ok is pressed")
+//        })
+//        self.present(alert, animated: true, completion: nil)
+        self.measurement.text = "Disconnected"
     }
     
     func startConnectingTo(Peripheral peripheral: CBPeripheral) {
-        
+        connectingIndicator.startAnimating()
+    }
+    
+    func didConnectTo(Peripheral peripheral: CBPeripheral) {
+        connectingIndicator.stopAnimating()
     }
 }
 

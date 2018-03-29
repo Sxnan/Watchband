@@ -14,6 +14,7 @@ protocol BluetoothModelDelegate: class {
     func bluetoothIsPoweredOff()
     func bluetoothIsPoweredOn()
     func startConnectingTo(Peripheral peripheral: CBPeripheral)
+    func didConnectTo(Peripheral peripheral: CBPeripheral)
     func didDisconnectedWith(Peripheral peripheral: CBPeripheral)
 }
 
@@ -113,6 +114,7 @@ extension BluetoothModel: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("\(central) is connected to \(peripheral)")
         peripheral.delegate = self
+        delegate?.didConnectTo(Peripheral: peripheral)
         discoverService(withServiceUUID: CBUUID(string: "180d"))
     }
     
