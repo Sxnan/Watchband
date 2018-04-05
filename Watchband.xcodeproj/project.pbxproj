@@ -13,6 +13,7 @@
 		14117B6A202CC12000D1DE58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14117B69202CC12000D1DE58 /* Assets.xcassets */; };
 		14117B6D202CC12000D1DE58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14117B6B202CC12000D1DE58 /* LaunchScreen.storyboard */; };
 		14117B75202CC13200D1DE58 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14117B74202CC13200D1DE58 /* BluetoothManager.swift */; };
+		1452261F206D634500AE5225 /* MeasurementSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1452261E206D634500AE5225 /* MeasurementSaver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		14117B6C202CC12000D1DE58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14117B6E202CC12000D1DE58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14117B74202CC13200D1DE58 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		1452261E206D634500AE5225 /* MeasurementSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSaver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				14117B69202CC12000D1DE58 /* Assets.xcassets */,
 				14117B6B202CC12000D1DE58 /* LaunchScreen.storyboard */,
 				14117B6E202CC12000D1DE58 /* Info.plist */,
+				1452261E206D634500AE5225 /* MeasurementSaver.swift */,
 			);
 			path = Watchband;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1452261F206D634500AE5225 /* MeasurementSaver.swift in Sources */,
 				14117B65202CC12000D1DE58 /* ViewController.swift in Sources */,
 				14117B75202CC13200D1DE58 /* BluetoothManager.swift in Sources */,
 				14117B63202CC12000D1DE58 /* AppDelegate.swift in Sources */,
