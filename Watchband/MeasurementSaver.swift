@@ -19,28 +19,25 @@ struct Measurement: CustomStringConvertible {
 
 class MeasurementSaver: NSObject {
     var dir: URL?
-    var fileUrl: URL?
     
     override init() {
         dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     }
     
-    func openFile(_ fileName: String) {
-        if let _dir = dir {
-            fileUrl = _dir.appendingPathComponent(fileName)
-        } else {
-            print("File open failed\n")
-        }
-    }
-    
-    func saveMeasurement(_ measurement: Measurement) -> Bool {
-        do {
-            if let _fileUrl = fileUrl {
-                let text = "\(measurement)"
-                try text.write(to: _fileUrl, atomically: false, encoding: .utf8)
+    func saveMeasurement(_ measurement: Measurement, toFile fileName:String) -> Bool {
+        
+        let fileUrl = dir!.appendingPathComponent(fileName)
+        if let outputStream = OutputStream(url: fileUrl, append: true) {
+            outputStream.open()
+            let text = "\(measurement)\n"
+            if outputStream.write(text, maxLength: text.count) < 0 {
+                print("Write failure")
+                outputStream.close()
+                return false
             }
-        } catch {
-            print("Measurement save failed\n")
+            outputStream.close()
+        } else {
+            print("Unable to open file")
             return false
         }
         return true

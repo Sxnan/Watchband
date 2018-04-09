@@ -12,6 +12,9 @@ import CoreBluetooth
 class ViewController: UIViewController, BluetoothModelDelegate{    
 
     private var btmodel: BluetoothModel!
+    private var saver: MeasurementSaver!
+    private let formatter = DateFormatter()
+    private let timeFormatter = DateFormatter()
     
     @IBOutlet weak var measurement: UILabel!
     @IBOutlet weak var connectingIndicator: UIActivityIndicatorView!
@@ -21,6 +24,11 @@ class ViewController: UIViewController, BluetoothModelDelegate{
         connectingIndicator.hidesWhenStopped = true
         btmodel = BluetoothModel()
         btmodel.delegate = self
+        saver = MeasurementSaver()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "yyyy-MM-dd"
+        timeFormatter.timeZone = TimeZone.current
+        timeFormatter.dateFormat = "HH:mm:ss"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,16 +38,22 @@ class ViewController: UIViewController, BluetoothModelDelegate{
 
 extension ViewController {
     func didMeasurementUpdate(_ measurement: Int32) {
+        let now = Date()
+
         self.measurement.text = "\(measurement)"
+        
+        // save the measurement
+        let fileName = "\(formatter.string(from: now)).txt"
+        let timeString = timeFormatter.string(from: now)
+        let data = Measurement(time: timeString, value: measurement)
+        if saver.saveMeasurement(data, toFile: fileName) {
+            print("\(data) is saved")
+        } else {
+            print("save \(data) failed")
+        }
     }
     
     func bluetoothIsPoweredOff() {
-//        let alert = UIAlertController(title: "Bluetooth is Powered Off", message: "Turn on the bluetooth", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default) {
-//            _ in
-//            print("Ok is pressed")
-//        })
-//        self.present(alert, animated: true, completion: nil)
         self.measurement.text = "Bluetooth is Off"
     }
     
@@ -48,12 +62,6 @@ extension ViewController {
     }
     
     func didDisconnectedWith(Peripheral peripheral: CBPeripheral) {
-//        let alert = UIAlertController(title: "Bluetooth Disconnected", message: "Try to reconnect\n Make sure the Bluetooth is on", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default) {
-//            _ in
-//            print("Ok is pressed")
-//        })
-//        self.present(alert, animated: true, completion: nil)
         self.measurement.text = "Disconnected"
     }
     
