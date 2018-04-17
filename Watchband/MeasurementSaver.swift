@@ -10,10 +10,10 @@ import UIKit
 
 struct Measurement: CustomStringConvertible {
     var time: String
-    var value: Int32
+    var value: Float32
     
     var description: String {
-        return "\(time), \(value)"
+        return "\(value)"
     }
 }
 

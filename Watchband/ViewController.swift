@@ -28,7 +28,7 @@ class ViewController: UIViewController, BluetoothModelDelegate{
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "yyyy-MM-dd"
         timeFormatter.timeZone = TimeZone.current
-        timeFormatter.dateFormat = "HH:mm:ss"
+        timeFormatter.dateFormat = "HH:mm:ss.SSS"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,13 +37,13 @@ class ViewController: UIViewController, BluetoothModelDelegate{
 }
 
 extension ViewController {
-    func didMeasurementUpdate(_ measurement: Int32) {
+    func didMeasurementUpdate(_ measurement: Float32) {
         let now = Date()
 
         self.measurement.text = "\(measurement)"
         
         // save the measurement
-        let fileName = "\(formatter.string(from: now)).txt"
+        let fileName = "\(formatter.string(from: now)).csv"
         let timeString = timeFormatter.string(from: now)
         let data = Measurement(time: timeString, value: measurement)
         if saver.saveMeasurement(data, toFile: fileName) {

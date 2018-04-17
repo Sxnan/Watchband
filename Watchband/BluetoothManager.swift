@@ -10,7 +10,7 @@ import Foundation
 import CoreBluetooth
 
 protocol BluetoothModelDelegate: class {
-    func didMeasurementUpdate(_ measurement: Int32)
+    func didMeasurementUpdate(_ measurement: Float32)
     func bluetoothIsPoweredOff()
     func bluetoothIsPoweredOn()
     func startConnectingTo(Peripheral peripheral: CBPeripheral)
@@ -28,7 +28,7 @@ class BluetoothModel: NSObject {
     
     var rxCharacteristic: CBCharacteristic?
     
-    private var measurement:Int32 = 0
+    private var measurement:Float32 = 0
 
     private var peripheral:CBPeripheral? {
         get {
@@ -147,14 +147,17 @@ extension BluetoothModel: CBCentralManagerDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let data = characteristic.value {
-            measurement = data.withUnsafeBytes({(ptr: UnsafePointer<Int32>) -> Int32 in
+            measurement = data.swapData().withUnsafeBytes({(ptr: UnsafePointer<Float32>) -> Float32 in
                 let m = ptr.pointee
-                return m.bigEndian
+                return m
             })
         }
-        print(measurement)
-        delegate?.didMeasurementUpdate(measurement)
-        print(characteristic.value?.hexDescription ?? "Error")
+        if (measurement > 0) {
+            print(measurement)
+            delegate?.didMeasurementUpdate(measurement)
+            print(characteristic.value?.hexDescription ?? "Error")
+        }
+
     }
     
 }
@@ -192,5 +195,20 @@ extension BluetoothModel: CBPeripheralDelegate {
 extension Data {
     var hexDescription: String {
         return reduce("") {$0 + String(format: "%02x", $1)}
+    }
+    
+    func swapData() -> Data {
+        var mdata = self // make a mutable copy
+        let count = self.count / MemoryLayout<UInt8>.size
+        mdata.withUnsafeMutableBytes { (i8ptr: UnsafeMutablePointer<UInt8>) in
+            for i in 0..<(count/2) {
+                let tmp = i8ptr[i]
+                i8ptr[i] =  i8ptr[count - i - 1]
+                i8ptr[count - i - 1] = tmp
+            }
+        }
+        print(self.hexDescription)
+        print(mdata.hexDescription)
+        return mdata
     }
 }

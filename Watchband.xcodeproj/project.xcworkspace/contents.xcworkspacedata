@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Watchband.xcodeproj">
+      location = "group:/Users/Sxnan/Documents/Watchband/Watchband/ViewController.swift">
+   </FileRef>
+   <FileRef
+      location = "group:project.pbxproj">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
