@@ -152,12 +152,9 @@ extension BluetoothModel: CBCentralManagerDelegate {
                 return m
             })
         }
-        if (measurement > 0) {
-            print(measurement)
-            delegate?.didMeasurementUpdate(measurement)
-            print(characteristic.value?.hexDescription ?? "Error")
-        }
-
+        print(measurement)
+        delegate?.didMeasurementUpdate(measurement)
+        print(characteristic.value?.hexDescription ?? "Error")
     }
     
 }

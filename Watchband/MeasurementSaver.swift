@@ -13,7 +13,7 @@ struct Measurement: CustomStringConvertible {
     var value: Float32
     
     var description: String {
-        return "\(value)"
+        return "\(time),\(value)"
     }
 }
 

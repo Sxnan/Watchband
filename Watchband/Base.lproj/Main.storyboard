@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QH4-9Z-cun">
-                                <rect key="frame" x="175" y="310" width="25" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Skin Contact" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QH4-9Z-cun">
+                                <rect key="frame" x="48" y="310" width="278" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -27,19 +27,29 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Sr9-4O-R1J">
                                 <rect key="frame" x="177" y="366" width="20" height="20"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fux-tf-hvr">
+                                <rect key="frame" x="148.5" y="242" width="77" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="start"/>
+                                <connections>
+                                    <action selector="toggleRecoding:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JHD-yk-ek5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerX" secondItem="Sr9-4O-R1J" secondAttribute="centerX" id="Bgz-Go-p4N"/>
-                            <constraint firstItem="Sr9-4O-R1J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="P6S-gx-ED1"/>
-                            <constraint firstItem="Sr9-4O-R1J" firstAttribute="top" secondItem="QH4-9Z-cun" secondAttribute="bottom" constant="8" symbolic="YES" id="acV-R1-Bcx"/>
-                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="yhX-YF-T5O"/>
+                            <constraint firstItem="Sr9-4O-R1J" firstAttribute="top" secondItem="QH4-9Z-cun" secondAttribute="bottom" constant="8" symbolic="YES" id="GjA-nQ-jMZ"/>
+                            <constraint firstItem="fux-tf-hvr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RYj-YY-LUb"/>
+                            <constraint firstItem="QH4-9Z-cun" firstAttribute="top" secondItem="fux-tf-hvr" secondAttribute="bottom" constant="8" symbolic="YES" id="TBG-At-fT1"/>
+                            <constraint firstItem="fux-tf-hvr" firstAttribute="centerX" secondItem="QH4-9Z-cun" secondAttribute="centerX" id="Vye-Vq-fNc"/>
+                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerX" secondItem="Sr9-4O-R1J" secondAttribute="centerX" id="lrc-at-7j5"/>
+                            <constraint firstItem="QH4-9Z-cun" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sWw-1d-oQB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="connectingIndicator" destination="Sr9-4O-R1J" id="r4h-2b-WRj"/>
-                        <outlet property="measurement" destination="QH4-9Z-cun" id="MxK-bc-YWX"/>
+                        <outlet property="measurementLabel" destination="QH4-9Z-cun" id="t6r-zB-U4e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
