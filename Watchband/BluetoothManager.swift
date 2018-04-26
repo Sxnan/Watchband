@@ -204,8 +204,6 @@ extension Data {
                 i8ptr[count - i - 1] = tmp
             }
         }
-        print(self.hexDescription)
-        print(mdata.hexDescription)
         return mdata
     }
 }

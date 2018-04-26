@@ -60,7 +60,7 @@ extension ViewController {
             self.measurementLabel.text = "No Skin Contact"
             return
         }
-        self.measurementLabel.text = "\(measurement)"
+        self.measurementLabel.text = String(format: "%.2f", measurement)
         
         if recordingFlag {
             let now = Date()
